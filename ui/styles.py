@@ -1,3 +1,4 @@
+
 """
 Vintage Studio Styling for PhotoRestore.
 Defines centralized theme variables (Light & Dark), design tokens,
@@ -358,7 +359,7 @@ def get_custom_css(theme: str = "light") -> str:
         padding: 0 !important;
     }}
 
-    [data-testid="stFileUploadDropzone"] {{
+    [data-testid="stFileUploaderDropzone"] {{
         background-color: var(--bg-secondary) !important;
         border: 2px dashed var(--border) !important;
         border-radius: 10px !important;
@@ -366,18 +367,18 @@ def get_custom_css(theme: str = "light") -> str:
         transition: all 0.2s ease-in-out !important;
     }}
 
-    [data-testid="stFileUploadDropzone"]:hover {{
+    [data-testid="stFileUploaderDropzone"]:hover {{
         border-color: var(--accent) !important;
         background-color: var(--bg-hover) !important;
     }}
 
-    [data-testid="stFileUploadDropzone"] div,
-    [data-testid="stFileUploadDropzone"] span,
-    [data-testid="stFileUploadDropzone"] small {{
+    [data-testid="stFileUploaderDropzone"] div,
+    [data-testid="stFileUploaderDropzone"] span,
+    [data-testid="stFileUploaderDropzone"] small {{
         color: var(--text-secondary) !important;
     }}
 
-    [data-testid="stFileUploadDropzone"] button {{
+    [data-testid="stFileUploaderDropzone"] button {{
         background-color: var(--bg-card) !important;
         color: var(--text-primary) !important;
         border: 1px solid var(--border) !important;
@@ -388,7 +389,7 @@ def get_custom_css(theme: str = "light") -> str:
         transition: all 0.15s ease !important;
     }}
 
-    [data-testid="stFileUploadDropzone"] button:hover {{
+    [data-testid="stFileUploaderDropzone"] button:hover {{
         background-color: var(--accent) !important;
         color: var(--btn-primary-text) !important;
         border-color: var(--accent-hover) !important;
@@ -693,5 +694,68 @@ def get_custom_css(theme: str = "light") -> str:
         color: var(--text-secondary);
         letter-spacing: 0.04em;
     }}
+    /* Targeted contrast fixes for Streamlit download and uploader widgets */
+    [data-testid="stDownloadButton"] button,
+    div.stDownloadButton button {{
+        background-color: var(--btn-secondary-bg) !important;
+        color: var(--btn-secondary-text) !important;
+        border-color: var(--border) !important;
+    }}
+
+    [data-testid="stDownloadButton"] button *,
+    div.stDownloadButton button * {{
+        color: var(--btn-secondary-text) !important;
+        fill: var(--btn-secondary-text) !important;
+    }}
+
+    [data-testid="stDownloadButton"] button:hover,
+    div.stDownloadButton button:hover {{
+        background-color: var(--btn-secondary-hover) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--accent) !important;
+    }}
+
+    [data-testid="stDownloadButton"] button:hover *,
+    div.stDownloadButton button:hover * {{
+        color: var(--text-primary) !important;
+        fill: var(--text-primary) !important;
+    }}
+
+    /* The uploader instruction label sits outside the dropzone itself. */
+    div[data-testid="stFileUploader"] label,
+    div[data-testid="stFileUploader"] [data-testid="stWidgetLabel"],
+    div[data-testid="stFileUploader"] [data-testid="stWidgetLabel"] p {{
+        color: var(--text-primary) !important;
+    }}
+
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {{
+        background-color: var(--bg-secondary) !important;
+        border-color: var(--border) !important;
+    }}
+
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] > div,
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] span,
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] small,
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] p {{
+        color: var(--text-secondary) !important;
+    }}
+
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button {{
+        background-color: var(--btn-secondary-bg) !important;
+        color: var(--btn-secondary-text) !important;
+        border: 1px solid var(--border) !important;
+    }}
+
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button *,
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button span {{
+        color: var(--btn-secondary-text) !important;
+        fill: var(--btn-secondary-text) !important;
+    }}
+
+    div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button:hover {{
+        background-color: var(--btn-secondary-hover) !important;
+        border-color: var(--accent) !important;
+    }}
+
     </style>
     """
