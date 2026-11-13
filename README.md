@@ -1,54 +1,85 @@
 # PhotoRestore – Old Photograph Restoration
 
-A Python-based photograph restoration application that uses **OpenCV Image Inpainting** to detect and reconstruct damaged regions in old photographs.
+A Python-based photograph restoration application that uses **OpenCV Image Inpainting** to detect and reconstruct damaged regions in vintage photographs.
 
-The project combines traditional image processing techniques with an interactive **Streamlit web interface**, allowing users to upload damaged photographs, restore them, compare results, and download the restored images.
+The project combines traditional image processing techniques with a refined **Streamlit "Vintage Studio" web interface**, allowing users to upload damaged photographs, inspect detected damage masks, compare before-and-after results, and download high-resolution restored images.
+
+---
 
 ## Features
 
-- Upload damaged photographs in JPG, JPEG, and PNG formats.
-- Automatic detection of potential damaged regions using thresholding.
-- Generate and refine damage masks using image processing techniques.
-- Restore selected regions using OpenCV's TELEA inpainting algorithm.
-- View original and restored photographs side by side.
-- Visualize the detected damage mask.
-- Download the restored photograph.
-- Explore the underlying restoration process through a Jupyter notebook.
+- **Vintage Studio Interface:** Elegant, archival-inspired UI with warm ivory palette, typography hierarchy, and distraction-free single-page flow.
+- **Light & Dark Mode:** Integrated instant theme switcher in the top navigation preserving the Vintage Studio identity in both palettes without losing uploaded photos or restoration state.
+- **Format Support:** Upload damaged photographs in **JPG**, **JPEG**, and **PNG** formats, or test directly with bundled archival sample photographs.
+- **Robust State Management:** Preserves uploaded photos, restoration results, and damage masks across Streamlit reruns and file downloads without redundant computations.
+- **Automatic Damage Detection:** Segment potential surface scratches and tears using intensity thresholding.
+- **Morphological Mask Refinement:** Expands detected damage boundaries using a $7 \times 7$ dilation kernel.
+- **Alexandru Telea Inpainting:** Reconstructs damaged regions using Fast Marching Method (`cv2.INPAINT_TELEA`) with a 4-pixel radius.
+- **Side-by-Side Comparison:** Large, aligned before-and-after photo panels preserving original proportions.
+- **Damage Mask Visualization:** Collapsible inspection drawer showing the exact binary mask used for inpainting.
+- **High-Resolution Export:** Download the restored image directly in JPEG format.
+- **Unit Test Suite:** Automated verification tests ensuring algorithm parameters and output structures remain strictly preserved.
+
+---
 
 ## Tech Stack
 
-- **Language:** Python
-- **Frontend:** Streamlit
-- **Image Processing:** OpenCV
+- **Language:** Python 3.10+
+- **Frontend / UI:** Streamlit
+- **Image Processing:** OpenCV (`opencv-python`)
 - **Numerical Operations:** NumPy
-- **Visualization:** Matplotlib
-- **Development Environment:** VS Code, Jupyter Notebook
+- **Testing:** Python `unittest`
+- **Visualization & Research:** Matplotlib, Jupyter Notebook
+
+---
 
 ## Project Structure
 
 ```text
 PhotoRestore/
 │
-├── app.py                                  # Streamlit application
-├── restoration.py                          # Image restoration logic
+├── app.py                                  # Main Streamlit application entry point
+├── restoration.py                          # Core image restoration engine (unmodified)
+│
+├── ui/                                     # Vintage Studio UI module
+│   ├── __init__.py                         # Package initialization
+│   ├── styles.py                           # Typography, color tokens, and custom CSS
+│   └── components.py                       # Modular layout components (header, hero, cards)
+│
+├── assets/                                 # Static assets & photograph samples
+│   ├── logo.png                            # Vintage Studio emblem
+│   └── sample_images/                      # Preserved archival test photographs
+│       ├── damaged_04.jpg
+│       ├── damaged_05.jpg
+│       ├── damage_03.png
+│       ├── Original Damaged Photo.png
+│       └── Restored.png
+│
+├── notebooks/                              # Experimental research
+│   └── restoration_experiments.ipynb       # Jupyter notebook with algorithm steps
+│
+├── tests/                                  # Test suite
+│   └── test_restoration.py                 # Unit tests for restoration engine
+│
+├── .streamlit/                             # Streamlit configuration
+│   └── config.toml                         # Theme colors and server options
+│
 ├── requirements.txt                        # Python dependencies
-├── .gitignore
-├── README.md
-│
-├── Inpainting to Restore Damaged Photos.ipynb
-│
-├── damaged_01.jpg
-└── damaged_02.jpg
+├── README.md                               # Project documentation
+└── .gitignore                              # Git exclusion rules
 ```
+
+---
 
 ## Prerequisites
 
 Before running the project, ensure you have:
 
-- Python 3.10 installed.
+- Python 3.10 or higher installed.
 - Git installed.
-- Visual Studio Code (recommended).
-- Python and Jupyter extensions in VS Code (for notebook usage).
+- Visual Studio Code (or your preferred IDE).
+
+---
 
 ## Installation and Setup
 
@@ -56,17 +87,10 @@ Before running the project, ensure you have:
 
 ```bash
 git clone https://github.com/Prithviraj383/Old-Photograph-Restoration.git
-```
-
-Navigate into the project directory:
-
-```bash
 cd Old-Photograph-Restoration
 ```
 
 ### 2. Create a virtual environment
-
-Create an isolated Python environment:
 
 ```bash
 python -m venv venv
@@ -75,38 +99,30 @@ python -m venv venv
 ### 3. Activate the virtual environment
 
 **Windows (PowerShell):**
-
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
 **Windows (Command Prompt):**
-
 ```cmd
 venv\Scripts\activate
 ```
 
 **Linux / macOS:**
-
 ```bash
 source venv/bin/activate
 ```
 
 ### 4. Install dependencies
 
-Upgrade pip:
-
 ```bash
 python -m pip install --upgrade pip
-```
-
-Install all required packages:
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 5. Run the application
+---
+
+## Running the Application
 
 Start the Streamlit application:
 
@@ -114,51 +130,56 @@ Start the Streamlit application:
 python -m streamlit run app.py
 ```
 
-The application will open in your default browser. If it does not, open the local URL displayed in your terminal, usually:
+The application will launch in your default browser at:
 
 ```text
 http://localhost:8501
 ```
 
+---
+
+## Running the Test Suite
+
+Run the automated tests to verify the restoration engine and parameter integrity:
+
+```bash
+python -m unittest tests/test_restoration.py
+```
+
+---
+
 ## Running the Jupyter Notebook
 
-The original restoration implementation is also available as a Jupyter notebook.
+The experimental notebook exploring each stage of the inpainting algorithm is located in `notebooks/`:
 
 1. Open the project folder in VS Code.
-2. Open `Inpainting to Restore Damaged Photos.ipynb`.
-3. Select the Python interpreter from the project's `venv`.
-4. Select the corresponding notebook kernel.
-5. Run the notebook cells.
+2. Navigate to `notebooks/restoration_experiments.ipynb`.
+3. Select your virtual environment Python kernel (`venv`).
+4. Execute the cells sequentially.
+
+---
 
 ## How It Works
 
-The restoration process uses OpenCV's image inpainting functionality.
+The restoration engine is based on classical computer vision inpainting:
 
-1. **Grayscale Conversion:** Convert the input photograph into grayscale.
-2. **Thresholding:** Identify potential damaged regions based on pixel intensity.
-3. **Mask Generation:** Create a binary mask identifying regions selected for restoration.
-4. **Mask Dilation:** Expand the selected regions to cover surrounding damaged pixels.
-5. **Image Inpainting:** Reconstruct the masked regions using the TELEA algorithm.
+1. **Grayscale Conversion:** The input BGR image is converted to grayscale (`cv2.COLOR_BGR2GRAY`) to isolate luminance from color fading.
+2. **Thresholding:** Pixels with an intensity value exceeding 195 are classified as potential scratch/tear damage (`cv2.threshold` with `cv2.THRESH_BINARY`).
+3. **Damage Mask Generation:** A binary matrix is generated where white pixels ($255$) indicate regions requiring reconstruction.
+4. **Mask Dilation:** A $7 \times 7$ rectangular structuring element (`np.ones((7, 7), np.uint8)`) expands damage borders by 1 iteration to cover scratch perimeters.
+5. **TELEA Inpainting:** The Fast Marching Method (`cv2.inpaint` with `cv2.INPAINT_TELEA` and radius $4$) synthesizes values within damaged regions from neighboring undamaged pixels.
 
-The application uses the `cv2.inpaint()` function with `cv2.INPAINT_TELEA`.
+---
 
-**Note:** The current implementation uses brightness-based thresholding. Consequently, it may not accurately detect every type of scratch or damage, especially when damaged regions have similar brightness to their surroundings.
+## Known Limitations
 
-## Limitations
+- **Threshold Sensitivity:** The current algorithm identifies damage through brightness thresholding ($> 195$). Scratches that are darker than their surroundings or low in contrast may not be detected automatically.
+- **Large Missing Regions:** Best suited for narrow cracks, scratches, and dust marks. Large structural voids cannot be plausibly synthesized without semantic priors.
+- **Bright Photograph Details:** Naturally bright elements (e.g., white clothing, clouds) that exceed the 195 threshold may be marked for inpainting.
+- **Traditional Computer Vision:** The application intentionally does not use deep learning or generative diffusion models; it does not hallucinate missing facial features.
 
-- Works best for relatively small scratches and damaged regions.
-- Large missing sections may not be reconstructed accurately.
-- Automatic damage detection can mistakenly select naturally bright regions.
-- The current implementation does not perform AI-based face restoration or photograph colorization.
+---
 
-## Future Improvements
+## License & Academic Note
 
-- Interactive manual damage selection.
-- Improved automatic damage detection.
-- Adjustable restoration parameters.
-- Side-by-side interactive image comparison.
-- Advanced restoration techniques for faces and severely damaged photographs.
-
-## License
-
-This project is intended for educational and learning purposes.
+This project was developed for an academic Image Processing subject. All restoration algorithms are deterministic and implemented with OpenCV.
